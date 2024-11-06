@@ -9,10 +9,16 @@ function TransactionHist() {
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerPage] = useState(6);
-  const fournisseurId = 1;
+
+  // Fetch fournisseurId from localStorage
+  const fournisseurId = localStorage.getItem('id');
 
   useEffect(() => {
     const fetchHistory = async () => {
+      if (!fournisseurId) {
+        setError('Fournisseur ID is missing');
+        return;
+      }
       try {
         const response = await axios.get(`http://localhost:5000/api/transaction-history/${fournisseurId}`);
         if (response.data && Array.isArray(response.data.history)) {
@@ -25,7 +31,9 @@ function TransactionHist() {
       }
     };
 
-    fetchHistory();
+    if (fournisseurId) {
+      fetchHistory();
+    }
   }, [fournisseurId]);
 
   const pageCount = Math.ceil(history.length / itemsPerPage);
@@ -36,7 +44,7 @@ function TransactionHist() {
   };
 
   return (
-   <div className="bg-gray-100 min-h-screen">
+    <div className="bg-gray-100 min-h-screen">
       <div className="flex flex-col lg:flex-row">
         <FournisseursSideNav className="hidden lg:block fixed top-0 left-0 h-full w-64 bg-gray-800 text-white" />
         <div className="flex-1 p-6 ">
@@ -49,9 +57,9 @@ function TransactionHist() {
                   <thead>
                     <tr>
                       <th className="py-3 px-6 border border-gray-300">Dealer Name</th>
-                      <th className="py-3 px-6 border border-gray-300">Dealer Phone</th>
+                      <th className="py-3 px-6 border border-gray-300">Dealer phoneNumber</th>
                       <th className="py-3 px-6 border border-gray-300">Fournisseur Name</th>
-                      <th className="py-3 px-6 border border-gray-300">Fournisseur Phone</th>
+                      <th className="py-3 px-6 border border-gray-300">Fournisseur phoneNumber</th>
                       <th className="py-3 px-6 border border-gray-300">Transferred Coins</th>
                       <th className="py-3 px-6 border border-gray-300">Action</th>
                       <th className="py-3 px-6 border border-gray-300">Date & Time</th>
@@ -61,9 +69,9 @@ function TransactionHist() {
                     {itemsToDisplay.map((entry) => (
                       <tr key={entry.id} className="hover:bg-gray-100">
                         <td className="py-2 px-4 border border-gray-300">{entry.Dealer ? entry.Dealer.name : 'N/A'}</td>
-                        <td className="py-2 px-4 border border-gray-300">{entry.Dealer ? entry.Dealer.phone : 'N/A'}</td>
+                        <td className="py-2 px-4 border border-gray-300">{entry.Dealer ? entry.Dealer.phoneNumber : 'N/A'}</td>
                         <td className="py-2 px-4 border border-gray-300">{entry.Fournisseur ? entry.Fournisseur.name : 'N/A'}</td>
-                        <td className="py-2 px-4 border border-gray-300">{entry.Fournisseur ? entry.Fournisseur.phone : 'N/A'}</td>
+                        <td className="py-2 px-4 border border-gray-300">{entry.Fournisseur ? entry.Fournisseur.phoneNumber : 'N/A'}</td>
                         <td className="py-2 px-4 border border-gray-300 text-center">{entry.totalcoins}</td>
                         <td className="py-2 px-4 border border-gray-300 text-center">
                           <span className="text-green-500 flex items-center justify-center">

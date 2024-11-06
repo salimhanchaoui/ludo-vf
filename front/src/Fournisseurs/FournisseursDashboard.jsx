@@ -18,7 +18,7 @@ function FournisseursDashboard() {
     lastName: '',
     email: '',
     img: '',
-    phone: ''
+    phoneNumber: ''
   });
   const [chartData, setChartData] = useState({
     labels: newMonths,
@@ -34,7 +34,13 @@ function FournisseursDashboard() {
   });
 
   useEffect(() => {
-    const fournisseurId = 1; // Adjust this as needed
+    // Retrieve the fournisseurId from local storage
+    const fournisseurId = localStorage.getItem('id');
+    
+    if (!fournisseurId) {
+      console.error('No fournisseurId found in local storage');
+      return;
+    }
 
     // Fetch fournisseur details
     axios.get(`http://localhost:5000/api/getOneFournisseur/${fournisseurId}`)
@@ -47,13 +53,13 @@ function FournisseursDashboard() {
           lastName: data.lastName,
           email: data.email,
           img: data.img,
-          phone: data.phone
+          phoneNumber: data.phoneNumber
         });
       })
       .catch(error => console.error('Error fetching fournisseur info:', error.response ? error.response.data : error.message));
 
     // Fetch dealers count
-    axios.get('http://localhost:5000/api/dealers/getAll', { params: { fournisseur_id: fournisseurId } })
+    axios.get(`http://localhost:5000/api/getDealersRelatedToFournisseur/${fournisseurId}`)
       .then(response => {
         setDealersCount(response.data.length);
       })
@@ -194,7 +200,7 @@ function FournisseursDashboard() {
 
             <div className="flex flex-col md:flex-row justify-between gap-8">
               <div className="flex-1 space-y-4">
-                {['name', 'lastName', 'email', 'phone', 'coins'].map((field, index) => (
+                {['name', 'lastName', 'email', 'phoneNumber', 'coins'].map((field, index) => (
                   <div key={index} className="flex justify-between bg-gray-100 p-4 rounded-lg shadow-md">
                     <span className="text-sm font-semibold text-gray-700">{field.charAt(0).toUpperCase() + field.slice(1)}:</span>
                     <span className="text-sm text-gray-900">{fournisseurInfo[field] || 'N/A'}</span>
@@ -219,7 +225,7 @@ function FournisseursDashboard() {
           <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
             <div className="bg-white p-6 rounded-lg shadow-lg w-96">
               <h2 className="text-lg font-semibold mb-4">Edit Fournisseur Info</h2>
-              {['name', 'lastName', 'email', 'phone'].map((field, index) => (
+              {['name', 'lastName', 'email', 'phoneNumber'].map((field, index) => (
                 <div key={index} className="mb-4">
                   <label className="block text-sm font-semibold text-gray-700" htmlFor={field}>
                     {field.charAt(0).toUpperCase() + field.slice(1)}:
