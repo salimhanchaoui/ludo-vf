@@ -16,6 +16,8 @@ function LoginDealer() {
     const handleSubmit=(e)=>{
         e.preventDefault()
         axios.post('http://localhost:5000/api/dealerLogin',created).then(r=>{
+          localStorage.setItem("id",r.data.dealer.id)
+          localStorage.setItem("name",r.data.dealer.name)
             navigate('/Dealer-dashboard')
         }).catch(err=>console.log(err))
     }

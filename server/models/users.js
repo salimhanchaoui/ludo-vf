@@ -21,7 +21,7 @@ const Users = sequelize.define('Users', {
   email: DataTypes.TEXT,
   password: DataTypes.TEXT,
   img: DataTypes.TEXT,
-  phone:DataTypes.TEXT
+  phoneNumber:DataTypes.TEXT
 }, {
   tableName: 'users',
   timestamps: false,

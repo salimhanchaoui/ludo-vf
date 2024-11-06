@@ -44,8 +44,8 @@ function UsersList() {
       [name]: value,
     }));
   };
-  const handleSave1 = () => {
-    axios.post(`http://localhost:5000/api/users`, created)
+  const handleSave1 = (e) => {
+    axios.post(`http://localhost:5000/api/users/${e}`, created)
       .then(response => {
         setrefresh1(!refresh1)
         toast.success('User Created Successfully', {
@@ -303,6 +303,14 @@ function UsersList() {
                         placeholder="Last Name"
                       />
                       <input
+                        type="text"
+                        name="phoneNumber"
+                        value={created.phoneNumber || ''}
+                        onChange={handleChange1}
+                        className="block w-full mb-2 p-2 border rounded text-black"
+                        placeholder="Phone Number"
+                      />
+                      <input
                         type="email"
                         name="email"
                         value={created.email || ''}
@@ -334,7 +342,7 @@ function UsersList() {
                         placeholder="Dealer Name"
                       />
                       <button
-                        onClick={() => handleSave1()}
+                        onClick={() => handleSave1(created.name)}
                         className="mt-2 px-4 py-2 bg-blue-500 text-white rounded"
                       >
                         Save
