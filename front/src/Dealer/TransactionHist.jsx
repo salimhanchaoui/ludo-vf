@@ -194,7 +194,8 @@ const TransactionHistory = () => {
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const id = localStorage.getItem('id');
+  const name = localStorage.getItem('name');
   useEffect(() => {
     // Fetch transaction history
     const fetchHistory = async () => {
@@ -218,7 +219,7 @@ const TransactionHistory = () => {
   if (error) {
     return <div>{error}</div>;
   }
-
+console.log('histoo',)
   return (
     <div className="flex flex-col lg:flex-row">
     {/* Sidebar */}
@@ -242,14 +243,14 @@ const TransactionHistory = () => {
             </tr>
           </thead>
           <tbody>
-            {history.map((transaction) => (
+            {history.filter(e=>''+e.dealer_id===id).map((transaction) => (
               <tr key={transaction.id} className="hover:bg-gray-100">
                 <td className="py-3 px-4 sm:px-6 border border-gray-300 text-center">{transaction.id}</td>
                 <td className="py-3 px-4 sm:px-6 border border-gray-300">
-                  {transaction.Dealer ? transaction.Dealer.name + ' ' + transaction.Dealer.lastName : 'N/A'}
+                  {transaction.Dealer ? transaction.Dealer.phoneNumber : 'N/A'}
                 </td>
                 <td className="py-3 px-4 sm:px-6 border border-gray-300">
-                  {transaction.PrimaryUser ? transaction.PrimaryUser.phone : 'N/A'}
+                  {transaction?.PrimaryUser ? transaction.PrimaryUser.phone : 'N/A'}
                 </td>
                 <td className="py-3 px-4 sm:px-6 border border-gray-300 text-center">{transaction.totalcoins}</td>
                 <td className="py-3 px-4 sm:px-6 border border-gray-300 text-center">

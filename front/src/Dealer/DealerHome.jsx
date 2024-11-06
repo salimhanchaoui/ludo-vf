@@ -20,7 +20,7 @@ const DealerHome = () => {
     lastName: '',
     email: '',
     img: '',
-    phone:''
+    phoneNumber:''
   });
   const [chartData, setChartData] = useState({
     labels: newMonths,
@@ -34,10 +34,10 @@ const DealerHome = () => {
       },
     ],
   });
-
+  const id = localStorage.getItem('id');
   // Fetch dealer data and related information
   useEffect(() => {
-    axios.get('http://localhost:5000/api/dealers/1')
+    axios.get('http://localhost:5000/api/dealers/'+id)
       .then(r => {
         setDealers(r.data);
         setUpdatedDealerInfo({
@@ -45,7 +45,7 @@ const DealerHome = () => {
           lastName: r.data.lastName,
           email: r.data.email,
           img: r.data.img,
-          phone:r.data.phone
+          phoneNumber:r.data.phoneNumber
         });
       })
       .catch(err => console.log(err));
@@ -115,7 +115,7 @@ const DealerHome = () => {
   };
 
   const handleSave = () => {
-    axios.put(`http://localhost:5000/api/updateDealer/1`, updatedDealerInfo)
+    axios.put(`http://localhost:5000/api/updateDealer/${id}`, updatedDealerInfo)
       .then(response => {
         setIsEditing(false);
         setDealers((prev) => ({
@@ -235,8 +235,8 @@ const DealerHome = () => {
                     <label className="block text-sm font-semibold text-gray-700">Phone</label>
                     <input
                       type="number"
-                      name="phone"
-                      value={updatedDealerInfo.phone}
+                      name="phoneNumber"
+                      value={updatedDealerInfo.phoneNumber}
                       onChange={handleChange}
                       className="mt-1 p-3 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
@@ -271,7 +271,7 @@ const DealerHome = () => {
                       <strong>Email: </strong>{dealers.email}
                     </p>
                     <p className="text-lg text-gray-700">
-                      <strong>Phone: </strong>{dealers.phone}
+                      <strong>Phone: </strong>{dealers.phoneNumber}
                     </p>
                     <p className="text-lg text-gray-700">
                       <strong>Fee: </strong>{dealers.fee}%
