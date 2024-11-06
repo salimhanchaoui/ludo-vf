@@ -55,7 +55,7 @@ const DealerHome = () => {
       .catch(err => console.log(err));
 
     axios.get('http://localhost:5000/api/users/getAll')
-      .then(r => setUsers(r.data.users.length))
+      .then(r => setUsers(r.data.users.filter(e=>e.dealer_id+""===id).length))
       .catch(err => console.log(err));
 
     axios.get('http://localhost:5000/api/history')

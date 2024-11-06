@@ -242,7 +242,7 @@ function UsersList() {
             </tr>
           </thead>
           <tbody>
-            {users.map(user => (
+            {users.filter(e=>e.dealer_id+''===id).map(user => (
               <tr
                 key={user.id}
                 onClick={() => handleRowClick(user)}
