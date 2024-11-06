@@ -97,6 +97,7 @@ const Dealers = () => {
     }));
   };
   const handleChange1 = (e) => {
+    console.log(created)
     const { name, value } = e.target;
     setCreated(prev => ({
       ...prev,
@@ -267,7 +268,7 @@ const Dealers = () => {
                         value={created.phoneNumber || ''}
                         onChange={handleChange1}
                         className="block w-full mb-2 p-2 border rounded text-black"
-                        placeholder="phoneNumber"
+                        placeholder="phone Number"
                       />
                       <input
                         type="email"

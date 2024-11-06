@@ -6,13 +6,13 @@ function DealersList() {
   const [dealers, setDealers] = useState([]);
   const [error, setError] = useState(null);
   const [showAddDealerPopup, setShowAddDealerPopup] = useState(false);
-  const [newDealer, setNewDealer] = useState({ name: '', lastName: '', phone: '', email: '', password: '', fournisseur_id: 1 });
+  const [newDealer, setNewDealer] = useState({ name: '', lastName: '', phoneNumber: '', email: '', password: '', fournisseur_id: 1 });
   const [sendCoins, setSendCoins] = useState({ visible: false, dealerId: null, amount: '' });
 
   useEffect(() => {
     const fetchDealers = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/dealers/getAll');
+        const response = await axios.get('http://localhost:5000/api/allFournisseur');
         console.log("Fetched dealers:", response.data); // Debugging log
         setDealers(response.data);
       } catch (error) {
@@ -25,9 +25,10 @@ function DealersList() {
   }, []);
 
   const handleCreateDealer = async (event) => {
+    
     event.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/dealers/add', newDealer);
+      const response = await axios.post('http://localhost:5000/api/addDealer', newDealer);
       console.log("Dealer created:", response.data); // Debugging log
       setDealers([...dealers, response.data]);
       closeAddDealerPopup();
@@ -80,9 +81,9 @@ function DealersList() {
   };
 
   const resetNewDealerForm = () => {
-    setNewDealer({ name: '', lastName: '', phone: '', email: '', password: '', fournisseur_id: 1 });
+    setNewDealer({ name: '', lastName: '', phoneNumber: '', email: '', password: '', fournisseur_id: 1 });
   };
-
+  console.log(dealers,'zebi')
   return (
     <div className='bg-gray-100 min-h-screen'>
     <div className="flex flex-col md:flex-row ">
@@ -104,13 +105,18 @@ function DealersList() {
   <div className="bg-white p-4 md:p-6 rounded-lg shadow-lg max-w-xs md:max-w-lg w-full">
     <h2 className="text-xl font-bold mb-4">New Dealer</h2>
     <form onSubmit={handleCreateDealer}>
-      {['name', 'lastName', 'phone', 'email', 'password'].map((field, index) => (
+      {['name', 'lastName', 'phoneNumber', 'email', 'password','fournisseurName'].map((field, index) => (
         <div key={index} className="mb-4">
           <label className="block text-gray-700 text-sm font-semibold mb-2">{field.charAt(0).toUpperCase() + field.slice(1)}</label>
           <input
             type={field === 'email' ? 'email' : field === 'password' ? 'password' : 'text'}
             value={newDealer[field]}
-            onChange={(e) => setNewDealer({ ...newDealer, [field]: e.target.value })}
+            onChange={(e) =>{
+              setNewDealer({ ...newDealer, [field]: e.target.value })
+            
+              console.log(newDealer,"azazaz")
+            }
+            } 
             className="form-input mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
             required
           />
@@ -139,7 +145,7 @@ function DealersList() {
 
         {error && <p className="text-red-500 mb-4">{error}</p>}
 
-        {dealers.length > 0 ? (
+        {dealers?.users?.length > 0 ? (
           <div className="bg-white p-6 rounded-lg shadow-md">
             <table className="min-w-full divide-y divide-gray-200 hidden md:table">
               <thead className="bg-gray-50">
@@ -150,11 +156,11 @@ function DealersList() {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {dealers.map((dealer) => (
+                {dealers?.users.map((dealer) => (
                   <tr key={dealer.id}>
                     <td className="py-4 px-6 whitespace-nowrap">{dealer.name}</td>
                     <td className="py-4 px-6 whitespace-nowrap">{dealer.lastName}</td>
-                    <td className="py-4 px-6 whitespace-nowrap">{dealer.phone}</td>
+                    <td className="py-4 px-6 whitespace-nowrap">{dealer.phoneNumber}</td>
                     <td className="py-4 px-6 whitespace-nowrap">{dealer.email}</td>
                     <td className="py-4 px-6 whitespace-nowrap">{dealer.coins || 0}</td>
                     <td className="py-4 px-6 whitespace-nowrap">
@@ -172,10 +178,10 @@ function DealersList() {
 
             {/* Mobile Table */}
             <div className="block md:hidden">
-              {dealers.map((dealer) => (
+              {dealers?.users?.map((dealer) => (
                 <div key={dealer.id} className="border p-4 mb-4 bg-white rounded shadow">
                   <h2 className="text-lg font-bold">{`${dealer.name} ${dealer.lastName}`}</h2>
-                  <p>Phone: {dealer.phone}</p>
+                  <p>Phone: {dealer.phoneNumber}</p>
                   <p>Email: {dealer.email}</p>
                   <p>Coins: {dealer.coins || 0}</p>
                   <button 

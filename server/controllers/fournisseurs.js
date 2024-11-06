@@ -44,7 +44,7 @@ exports.getFournisseurById = async (req, res) => {
 // Create new fournisseur
 exports.createFournisseur = async (req, res) => {
   try {
-    const { name, lastName, img, email, password, phone, coins } = req.body;
+    const { name, lastName, img, email, password, phoneNumber, coins } = req.body;
 
     // Check if a fournisseur with the same name already exists
     const existingFournisseur = await Fournisseurs.findOne({ where: { name } });
@@ -61,7 +61,7 @@ exports.createFournisseur = async (req, res) => {
       img,
       email,
       password,
-      phone,
+      phoneNumber,
       coins: coins || 0 // Default to 0 if coins are not provided
     });
 
