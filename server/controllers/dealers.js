@@ -27,14 +27,11 @@ module.exports={
     addDealer: async (req, res) => {
         try {
             // Check if a dealer with the same name already exists
-            const existingDealer = await Dealer.findOne({ where: { name: req.body.name } });
-            
-            if (existingDealer) {
-                // If dealer exists, return a conflict error
-                return res.status(409).json({ message: 'Dealer with this name already exists' });
-            }
-            const fournisseur=await Fournisseur.findOne({ where: { name: req.body.fournisseurName } });
 
+            const fournisseur=await Fournisseur.findOne({ where: { name: req.body.fournisseurName } });
+            if (!fournisseur){
+              return res.status(400).json({message:"Fournisseur Name doesn't exist"})
+            }
             // If the dealer does not exist, create the new dealer
             const newDealer = await Dealer.create({...req.body,fournisseur_id:fournisseur.id});
             

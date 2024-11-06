@@ -14,7 +14,7 @@ function DealerSideNav() {
   return (
     <div className="h-screen w-[350px] bg-white text-gray-800 flex flex-col shadow-md">
       <div className="p-4 text-center text-2xl font-semibold border-b border-gray-300">
-        Dealer Dashboard
+        Admin Dashboard
       </div>
       <nav className="flex-1 p-4">
         <ul>

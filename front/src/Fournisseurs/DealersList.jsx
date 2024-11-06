@@ -6,37 +6,46 @@ function DealersList() {
   const [dealers, setDealers] = useState([]);
   const [error, setError] = useState(null);
   const [showAddDealerPopup, setShowAddDealerPopup] = useState(false);
-  const [newDealer, setNewDealer] = useState({ name: '', lastName: '', phoneNumber: '', email: '', password: '', fournisseur_id: 1 });
+  const [newDealer, setNewDealer] = useState({ name: '', lastName: '', phoneNumber: '', email: '', password: '', fournisseur_id: "" });
   const [sendCoins, setSendCoins] = useState({ visible: false, dealerId: null, amount: '' });
-
+  
   useEffect(() => {
-    const fetchDealers = async () => {
-      try {
-        const response = await axios.get('http://localhost:5000/api/allFournisseur');
-        console.log("Fetched dealers:", response.data); // Debugging log
-        setDealers(response.data);
-      } catch (error) {
-        console.error("Error fetching dealers:", error); // Log error details
-        setError('Error fetching dealers');
-      }
-    };
-
     fetchDealers();
   }, []);
+  const fournisseurId = localStorage.getItem('id');
+  useEffect(() => {
+    if (fournisseurId) {
+      fetchDealers();
+    } else {
+      console.error('No fournisseurId found in localStorage');
+    }
+  }, [fournisseurId]);
+  const fetchDealers = async () => {
+    try {
+      const response = await axios.get(`http://localhost:5000/api/getDealersRelatedToFournisseur/${fournisseurId}`);
+      console.log("Fetched dealers:", response.data); // Debugging log
+      setDealers(response.data);
+    } catch (error) {
+      console.error("Error fetching dealers:", error); // Log error details
+      setError('Error fetching dealers');
+    }
+  };
+  
 
   const handleCreateDealer = async (event) => {
-    
     event.preventDefault();
     try {
       const response = await axios.post('http://localhost:5000/api/addDealer', newDealer);
       console.log("Dealer created:", response.data); // Debugging log
-      setDealers([...dealers, response.data]);
+      // Fetch the updated list of dealers to refresh the view
+      fetchDealers();
       closeAddDealerPopup();
     } catch (error) {
       console.error("Error creating dealer:", error); // Log error details
       setError('Error creating dealer');
     }
   };
+  
 
   const openAddDealerPopup = () => setShowAddDealerPopup(true);
   const closeAddDealerPopup = () => {
@@ -60,15 +69,13 @@ function DealersList() {
       await axios.post('http://localhost:5000/api/add-coins', {
         dealerId: sendCoins.dealerId,
         totalcoins,
-        fournisseurId: 1
+        fournisseurId: fournisseurId
       });
       setDealers(dealers.map(dealer =>
         dealer.id === sendCoins.dealerId ? { ...dealer, coins: (dealer.coins || 0) + totalcoins } : dealer
       ));
       closeSendCoinsPopup();
     } catch (error) {
-      console.error("Error sending coins:", error); // Log error details
-      setError('Error sending coins');
     }
   };
 
@@ -81,7 +88,7 @@ function DealersList() {
   };
 
   const resetNewDealerForm = () => {
-    setNewDealer({ name: '', lastName: '', phoneNumber: '', email: '', password: '', fournisseur_id: 1 });
+    setNewDealer({ name: '', lastName: '', phoneNumber: '', email: '', password: '', fournisseur_id: fournisseurId });
   };
   console.log(dealers,'zebi')
   return (
@@ -143,9 +150,9 @@ function DealersList() {
 
         )}
 
-        {error && <p className="text-red-500 mb-4">{error}</p>}
+       
 
-        {dealers?.users?.length > 0 ? (
+        {dealers.length > 0 ? (
           <div className="bg-white p-6 rounded-lg shadow-md">
             <table className="min-w-full divide-y divide-gray-200 hidden md:table">
               <thead className="bg-gray-50">
@@ -156,7 +163,7 @@ function DealersList() {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {dealers?.users.map((dealer) => (
+                {dealers.map((dealer) => (
                   <tr key={dealer.id}>
                     <td className="py-4 px-6 whitespace-nowrap">{dealer.name}</td>
                     <td className="py-4 px-6 whitespace-nowrap">{dealer.lastName}</td>
@@ -178,7 +185,7 @@ function DealersList() {
 
             {/* Mobile Table */}
             <div className="block md:hidden">
-              {dealers?.users?.map((dealer) => (
+              {dealers.map((dealer) => (
                 <div key={dealer.id} className="border p-4 mb-4 bg-white rounded shadow">
                   <h2 className="text-lg font-bold">{`${dealer.name} ${dealer.lastName}`}</h2>
                   <p>Phone: {dealer.phoneNumber}</p>

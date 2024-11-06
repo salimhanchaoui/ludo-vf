@@ -35,7 +35,8 @@ function UsersList() {
     const [isAddUserModalOpen, setIsAddUserModalOpen] = useState(false);
     const [addUserError, setAddUserError] = useState('');
     const [addUserSuccess, setAddUserSuccess] = useState('');
-
+    const id = localStorage.getItem('id');
+    const dlname = localStorage.getItem('name');
   useEffect(() => {
     axios.get(`http://localhost:5000/api/users/getAll`)
       .then(response => {
@@ -64,7 +65,7 @@ function UsersList() {
       return;
     }
 
-    axios.post('http://localhost:5000/api/users/'+'salim', newUserData)
+    axios.post('http://localhost:5000/api/users/'+dlname, newUserData)
       .then(response => {
         setUsers(prevUsers => [...prevUsers, response.data]);
         setAddUserSuccess('User added successfully!');
@@ -123,7 +124,7 @@ function UsersList() {
     }
   
     const amount = parseFloat(transactionAmount);
-    const dealerId = 1; // Assuming the dealer ID is 1. Adjust as needed.
+    const dealerId = id; // Assuming the dealer ID is 1. Adjust as needed.
   
     // Clear previous success and error messages
     setTransactionSuccess('');
@@ -143,7 +144,7 @@ function UsersList() {
           if (response.status === 200) {
             return axios.post('http://localhost:5000/api/history', {
               totalcoins: amount,
-              role: 'transfer',
+              role: 'dealer',
               dealer_id: dealerId,
               user_id: userId,
             });
@@ -176,7 +177,7 @@ function UsersList() {
           if (response.status === 200) {
             return axios.post('http://localhost:5000/api/history', {
               totalcoins: amount,
-              role: 'withdraw',
+              role: 'dealer',
               dealer_id: dealerId,
               user_id: userId,
             });
@@ -241,7 +242,7 @@ function UsersList() {
             </tr>
           </thead>
           <tbody>
-            {users.map(user => (
+            {users.filter(e=>e.dealer_id+''===id).map(user => (
               <tr
                 key={user.id}
                 onClick={() => handleRowClick(user)}

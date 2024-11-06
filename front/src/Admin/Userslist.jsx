@@ -164,7 +164,7 @@ function UsersList() {
                 onClick={() => handleRowClick(user)}
                 >{user.name}</td>
                 <td className="py-2 px-4 border-b border-gray-400">{user.lastName}</td>
-                <td className="py-2 px-4 border-b border-gray-400">{user.phone}</td>
+                <td className="py-2 px-4 border-b border-gray-400">{user.phoneNumber}</td>
                 <td className="py-2 px-4 border-b border-gray-400">{user.email}</td>
                 <td className="py-2 px-4 border-b border-gray-400">{user.coins}</td>
                 <td className="py-2 px-4 border-b border-gray-400">
