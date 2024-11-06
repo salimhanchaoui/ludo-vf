@@ -1,10 +1,10 @@
 const express = require('express');
 const routerHist = express.Router();
-const { createHistoryEntry,getAll,getLast, getAllHistoryEntriesOfFournisseurs,getAllHistoryEntriesOfDealers,getAllHistoryEntriesOfUsers, deleteHistUser, deleteHistDealer, deleteHistFournisseur, getTransactionsByMonth } = require('../controllers/historyController');
+const { createHistoryEntry,getAll,getLast,getAllHistoryEntries, getAllHistoryEntriesOfFournisseurs,getAllHistoryEntriesOfDealers,getAllHistoryEntriesOfUsers, deleteHistUser, deleteHistDealer, deleteHistFournisseur, getTransactionsByMonth } = require('../controllers/historyController');
 
 // Route to create a new history entry
 routerHist.post('/history', createHistoryEntry);
-routerHist.get('/history', getAll);
+routerHist.get('/history', getAllHistoryEntries);
 routerHist.get('/history/getLast', getLast);
 
 // Route to get all history entries

@@ -198,8 +198,10 @@ const getAllHistoryEntries = async (req, res) => {
   }
 };
 
+
 module.exports = {
   createHistoryEntry,
+  
   getAllHistoryEntriesOfFournisseurs,
   getAllHistoryEntriesOfDealers,
   getAllHistoryEntriesOfUsers,
