@@ -212,7 +212,7 @@ const[refresh,setrefresh]=useState(false)
                 <td className="border-b border-gray-400 px-4 py-2 text-left" >
                   <img src={user.img} alt="User" style={{ width: '35px', height: '35px' }} className='rounded-full' />
                 </td>
-                <td className="border-b border-gray-400 px-4 py-2 text-left" >{user.returningFee}</td>
+                <td className="border-b border-gray-400 px-4 py-2 text-left" >{user.fee}</td>
                 <td className="border-gray-400 border-b px-4 py-2 text-left font-semibold" >
                   <button
                   
@@ -239,8 +239,8 @@ const[refresh,setrefresh]=useState(false)
                         />
                         <input
                           type="number"
-                          name="returningFee"
-                          value={updated.returningFee || ''}
+                          name="fee"
+                          value={updated.fee || ''}
                           onChange={handleChange}
                           className="block w-full mb-2 p-2 border rounded text-black"
                           placeholder="Returning Fee"
@@ -376,8 +376,8 @@ const[refresh,setrefresh]=useState(false)
                       />
                       <input
                         type="number"
-                        name="returningFee"
-                        value={created.returningFee || ''}
+                        name="fee"
+                        value={created.fee || ''}
                         onChange={handleChange1}
                         className="block w-full mb-2 p-2 border rounded text-black"
                         placeholder="Returning Fee"
