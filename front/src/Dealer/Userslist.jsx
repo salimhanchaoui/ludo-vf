@@ -10,7 +10,7 @@ function UsersList() {
   const [editData, setEditData] = useState({
     name: '',
     lastName: '',
-    phone: '',
+    phoneNumberNumber: '',
     email: '',
   });
   const [isActionModalOpen, setIsActionModalOpen] = useState(false);
@@ -29,7 +29,8 @@ function UsersList() {
       email: '',
       password: '',
       img: '',
-      phone: '',
+      phoneNumber: '',
+      
     });
     const [isAddUserModalOpen, setIsAddUserModalOpen] = useState(false);
     const [addUserError, setAddUserError] = useState('');
@@ -57,8 +58,8 @@ function UsersList() {
     setAddUserError('');
     setAddUserSuccess('');
 
-    const { name, lastName, email, password, img, phone } = newUserData;
-    if (!name || !lastName || !email || !password || !img || !phone) {
+    const { name, lastName, email, password, img, phoneNumber,coins } = newUserData;
+    if (!name || !lastName || !email || !password || !img || !phoneNumber) {
       setAddUserError('All fields are required.');
       return;
     }
@@ -67,7 +68,7 @@ function UsersList() {
       .then(response => {
         setUsers(prevUsers => [...prevUsers, response.data]);
         setAddUserSuccess('User added successfully!');
-        setNewUserData({ name: '', lastName: '', email: '', password: '', img: '', phone: '' });
+        setNewUserData({ name: '', lastName: '', email: '', password: '', img: '', phoneNumber: '' });
         setIsAddUserModalOpen(false);
       })
       .catch(error => {
@@ -80,8 +81,9 @@ function UsersList() {
     setEditData({
       name: user.name,
       lastName: user.lastName,
-      phone: user.phone,
+      phoneNumber: user.phoneNumber,
       email: user.email,
+     
     });
     setIsDetailModalOpen(true);
   };
@@ -103,7 +105,7 @@ function UsersList() {
           )
         );
         setSelectedUser(prevUser => ({ ...prevUser, ...editData }));
-        setEditData({ name: '', lastName: '', phone: '', email: '' });
+        setEditData({ name: '', lastName: '', phoneNumber: '', email: '' });
         setIsActionModalOpen(false);
       })
       .catch(error => console.error('Error updating user info:', error));
@@ -200,7 +202,7 @@ function UsersList() {
     setEditData({
       name: user.name,
       lastName: user.lastName,
-      phone: user.phone,
+      phoneNumber: user.phoneNumber,
       email: user.email,
     });
     setIsActionModalOpen(true);
@@ -232,7 +234,7 @@ function UsersList() {
               <th className="py-2 px-4 border-b-2 border-gray-300">ID</th>
               <th className="py-2 px-4 border-b-2 border-gray-300">Name</th>
               <th className="py-2 px-4 border-b-2 border-gray-300">Last Name</th>
-              <th className="py-2 px-4 border-b-2 border-gray-300">Phone</th>
+              <th className="py-2 px-4 border-b-2 border-gray-300">phoneNumber</th>
               <th className="py-2 px-4 border-b-2 border-gray-300">Email</th>
               <th className="py-2 px-4 border-b-2 border-gray-300">Coins</th>
               <th className="py-2 px-4 border-b-2 border-gray-300">Actions</th>
@@ -248,7 +250,7 @@ function UsersList() {
                 <td className="py-2 px-4 border-b border-gray-400">{user.id}</td>
                 <td className="py-2 px-4 border-b border-gray-400">{user.name}</td>
                 <td className="py-2 px-4 border-b border-gray-400">{user.lastName}</td>
-                <td className="py-2 px-4 border-b border-gray-400">{user.phone}</td>
+                <td className="py-2 px-4 border-b border-gray-400">{user.phoneNumber}</td>
                 <td className="py-2 px-4 border-b border-gray-400">{user.email}</td>
                 <td className="py-2 px-4 border-b border-gray-400">{user.coins}</td>
                 <td className="py-2 px-4 border-b border-gray-400">
@@ -337,11 +339,11 @@ function UsersList() {
               />
             </label>
             <label>
-              <span className="block font-bold">Phone</span>
+              <span className="block font-bold">phoneNumber</span>
               <input
                 type="text"
-                name="phone"
-                value={editData.phone}
+                name="phoneNumber"
+                value={editData.phoneNumber}
                 onChange={handleEditChange}
                 className="w-full border border-gray-300 p-2 rounded"
               />
@@ -469,11 +471,11 @@ function UsersList() {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="phone" className="block text-sm font-medium text-gray-700">Phone</label>
+            <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700">phoneNumber</label>
             <input
               type="text"
-              name="phone"
-              value={newUserData.phone}
+              name="phoneNumber"
+              value={newUserData.phoneNumber}
               onChange={handleNewUserChange}
               className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
             />

@@ -15,6 +15,8 @@ function LoginFournisseur() {
     const handleSubmit=(e)=>{
         e.preventDefault()
         axios.post('http://localhost:5000/api/fournisseurLogin',created).then(r=>{
+          localStorage.setItem("id",r.data.dealer.id)
+          localStorage.setItem("name",r.data.dealer.name)
             navigate('/Fournisseur-dashboard')
         }).catch(err=>console.log(err))
     }
