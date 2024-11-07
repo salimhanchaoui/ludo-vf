@@ -57,6 +57,15 @@ function DealerSideNav() {
               <span className="text-lg">Users</span>
             </Link>
           </li>
+          <li className="mb-4">
+            <Link 
+              to="/rooms" 
+              className={getLinkClassName('/rooms')}
+            >
+              <FaUsers className="mr-3 text-2xl" />
+              <span className="text-lg">Rooms</span>
+            </Link>
+          </li>
          
           <li className="mb-4">
             <Link 
