@@ -13,7 +13,7 @@ const Rooms = () => {
   const [isActionModalOpen, setIsActionModalOpen] = useState(false);
   const [editData, setEditData] = useState({
     roomName:"",
-    price:"",
+    // price:"",
     entryfees:"",
     burningRate:"",
     botDifficulty:""
@@ -121,7 +121,7 @@ const deleteRoom=(id)=>{
   const openEditModal = (transaction) => {
     setEditData({
       roomName:"",
-    price:"",
+    // price:"",
     entryfees:"",
     burningRate:"",
     botDifficulty:""
@@ -138,7 +138,7 @@ const deleteRoom=(id)=>{
           <thead>
             <tr>
               <th className="py-3 px-6 border border-gray-300">Room Name</th>
-              <th className="py-3 px-6 border border-gray-300">Price</th>
+              {/* <th className="py-3 px-6 border border-gray-300">Price</th> */}
               <th className="py-3 px-6 border border-gray-300">Entry Fee</th>
               <th className="py-3 px-6 border border-gray-300">Burning Rate</th>
               <th className="py-3 px-6 border border-gray-300">Bot Difficulty</th>
@@ -155,9 +155,9 @@ const deleteRoom=(id)=>{
                     <td className="py-3 px-6 border border-gray-300">
                       {transaction.roomName}
                     </td>
-                    <td className="py-3 px-6 border border-gray-300">
+                    {/* <td className="py-3 px-6 border border-gray-300">
                       {transaction.price}
-                    </td>
+                    </td> */}
                     <td className="py-3 px-6 border border-gray-300 text-center">
                       {transaction.entryfees}
                     </td>
@@ -201,7 +201,7 @@ const deleteRoom=(id)=>{
                     className="w-full border border-gray-300 p-2 rounded"
                   />
                 </label>
-                <label>
+                {/* <label>
                   <span className="block font-bold">Price</span>
                   <label htmlFor="">{editData.price}</label>
                   <input
@@ -211,12 +211,11 @@ const deleteRoom=(id)=>{
                     onChange={handleEditChange}
                     className="w-full border border-gray-300 p-2 rounded"
                   />
-                </label>
+                </label> */}
                 <label>
                   <span className="block font-bold">Entry Fee</span>
-                  <label htmlFor="">{editData.entryfees}</label>
                   <input
-                    type="range"
+                    type="number"
                     name="entryfees"
                     value={editData.entryfees}
                     onChange={handleEditChange}
@@ -289,11 +288,11 @@ const deleteRoom=(id)=>{
                       />
                       <label htmlFor="">Entry Fees</label>
                       <br/>
-                      <label htmlFor="">{created.entryfees}</label>
                       <input
-                        type="range"
+                        type="number"
                         value={created.entryfees}
                         name="entryfees"
+                        max={500}
                         onChange={handleChange1}
                         className="block w-full mb-2 p-2 border rounded text-black"
                         placeholder="Entry Fees"
@@ -321,9 +320,8 @@ const deleteRoom=(id)=>{
                         className="block w-full mb-2 p-2 border rounded text-black"
                         placeholder="Bot Difficulty "
                       />
-                      <label htmlFor="">Price</label>
-                      <br />
-                      <label htmlFor="">{created.price}</label>
+                     
+                      {/* <label htmlFor="">{created.price}</label>
                       <input
                         type="range"
                         name="price"
@@ -331,7 +329,7 @@ const deleteRoom=(id)=>{
                         onChange={handleChange1}
                         className="block w-full mb-2 p-2 border rounded text-black"
                         placeholder="Price"
-                      />
+                      /> */}
                       
                       <button
                         onClick={() => handleSave1()}
