@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { FaTachometerAlt, FaUsers, FaHistory, FaBars, FaTimes } from 'react-icons/fa';
-import { Link, useLocation } from 'react-router-dom';
+import { FaTachometerAlt, FaUsers, FaHistory, FaBars, FaTimes, FaSignOutAlt } from 'react-icons/fa';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 function DealerSideNav() {
     const location = useLocation();
+    const navigate = useNavigate(); // For navigation after logout
     const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State for mobile sidebar toggle
 
     const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
@@ -11,6 +12,13 @@ function DealerSideNav() {
     const getLinkClassName = (path) => {
         const isActive = location.pathname === path;
         return `flex items-center justify-center hover:bg-gray-200 p-2 rounded w-full text-gray-800 ${isActive ? 'bg-gray-300 border-l-8 border-gray-600' : ''}`;
+    };
+
+    const handleLogout = () => {
+        // Clear local storage (or you can clear specific keys like localStorage.removeItem('token'))
+        localStorage.clear();
+        // Navigate to home page after logout
+        navigate('/');
     };
 
     return (
@@ -29,8 +37,8 @@ function DealerSideNav() {
                     isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
                 } md:translate-x-0 md:relative md:w-[350px] z-40 md:z-auto`}
             >
-                <div className="p-4 text-center text-2xl font-semibold border-b border-gray-300 mt-[20px]" >
-                    Fournisseur Dashboard
+                <div className="p-4 text-center text-2xl font-semibold border-b border-gray-300 mt-[20px]">
+                    Dealer Dashboard
                 </div>
                 <nav className="flex-1 p-4">
                     <ul>
@@ -66,6 +74,16 @@ function DealerSideNav() {
                         </li>
                     </ul>
                 </nav>
+                {/* Logout Button */}
+                <div className="p-4 border-t border-gray-300">
+                    <button
+                        onClick={handleLogout}
+                        className="flex items-center justify-center hover:bg-gray-200 p-2 rounded w-full text-gray-800"
+                    >
+                        <FaSignOutAlt className="mr-3 text-2xl" />
+                        <span className="text-lg">Logout</span>
+                    </button>
+                </div>
             </div>
 
             {/* Overlay for mobile view */}

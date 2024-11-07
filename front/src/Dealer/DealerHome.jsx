@@ -59,7 +59,7 @@ const DealerHome = () => {
       .catch(err => console.log(err));
 
     axios.get('http://localhost:5000/api/history')
-      .then(r => setTransaction(r.data.length))
+      .then(r => setTransaction(r.data.filter(e=>''+e.dealer_id===id && e.fournisseur_id===null).length))
       .catch(err => console.log(err));
 
     axios.get('http://localhost:5000/api/allFournisseur')
