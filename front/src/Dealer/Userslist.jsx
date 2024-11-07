@@ -144,7 +144,7 @@ function UsersList() {
           if (response.status === 200) {
             return axios.post('http://localhost:5000/api/history', {
               totalcoins: amount,
-              role: 'transfer',
+              role: 'dealer',
               dealer_id: dealerId,
               user_id: userId,
             });
@@ -177,7 +177,7 @@ function UsersList() {
           if (response.status === 200) {
             return axios.post('http://localhost:5000/api/history', {
               totalcoins: amount,
-              role: 'withdraw',
+              role: 'dealer',
               dealer_id: dealerId,
               user_id: userId,
             });
