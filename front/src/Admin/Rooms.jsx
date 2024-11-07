@@ -16,6 +16,7 @@ const Rooms = () => {
     price:"",
     entryfees:"",
     burningRate:"",
+    botDifficulty:""
   });
 
   useEffect(() => {
@@ -43,7 +44,12 @@ const deleteRoom=(id)=>{
   // Function to handle changes in the edit modal input fields
   const handleEditChange = (e) => {
     const { name, value } = e.target;
-    setEditData({ ...editData, [name]: value });
+    setEditData((prev)=>{
+      return{
+        ...prev,
+        [name]:value
+      }
+    });
     console.log(editData)
   };
 
@@ -118,6 +124,7 @@ const deleteRoom=(id)=>{
     price:"",
     entryfees:"",
     burningRate:"",
+    botDifficulty:""
     });
     setIsActionModalOpen(true);
   };
@@ -134,6 +141,7 @@ const deleteRoom=(id)=>{
               <th className="py-3 px-6 border border-gray-300">Price</th>
               <th className="py-3 px-6 border border-gray-300">Entry Fee</th>
               <th className="py-3 px-6 border border-gray-300">Burning Rate</th>
+              <th className="py-3 px-6 border border-gray-300">Bot Difficulty</th>
               <th className="py-3 px-6 border border-gray-300">Actions</th>
               <th className="py-3 px-6 border border-gray-300 cursor-pointer"
               onClick={()=>setcreateUser(true)}
@@ -155,6 +163,9 @@ const deleteRoom=(id)=>{
                     </td>
                     <td className="py-3 px-6 border border-gray-300 text-center">
                       {transaction.burningRate}
+                    </td>
+                    <td className="py-3 px-6 border border-gray-300 text-center">
+                      {transaction.botDifficulty}
                     </td>
                     <td className="py-2 px-4 border-b border-r border-gray-400">
                       <button
@@ -192,8 +203,9 @@ const deleteRoom=(id)=>{
                 </label>
                 <label>
                   <span className="block font-bold">Price</span>
+                  <label htmlFor="">{editData.price}</label>
                   <input
-                    type="text"
+                    type="range"
                     name="price"
                     value={editData.price}
                     onChange={handleEditChange}
@@ -202,8 +214,9 @@ const deleteRoom=(id)=>{
                 </label>
                 <label>
                   <span className="block font-bold">Entry Fee</span>
+                  <label htmlFor="">{editData.entryfees}</label>
                   <input
-                    type="text"
+                    type="range"
                     name="entryfees"
                     value={editData.entryfees}
                     onChange={handleEditChange}
@@ -212,10 +225,22 @@ const deleteRoom=(id)=>{
                 </label>
                 <label>
                   <span className="block font-bold">Burning Rate</span>
+                  <label htmlFor="">{editData.burningRate}</label>
                   <input
-                    type="text"
+                    type="range"
                     name="burningRate"
                     value={editData.burningRate}
+                    onChange={handleEditChange}
+                    className="w-full border border-gray-300 p-2 rounded"
+                  />
+                </label>
+                <label>
+                  <span className="block font-bold">Bot Difficulty</span>
+                  <label htmlFor="">{editData.botDifficulty}</label>
+                  <input
+                    type="range"
+                    name="botDifficulty"
+                    value={editData.botDifficulty}
                     onChange={handleEditChange}
                     className="w-full border border-gray-300 p-2 rounded"
                   />
@@ -254,7 +279,7 @@ const deleteRoom=(id)=>{
                     <div className="mt-2">
                       
                      
-                      
+                    <label htmlFor="">Room Name</label>
                       <input
                         type="text"
                         name="roomName"
@@ -262,23 +287,47 @@ const deleteRoom=(id)=>{
                         className="block w-full mb-2 p-2 border rounded text-black"
                         placeholder="Room Name"
                       />
+                      <label htmlFor="">Entry Fees</label>
+                      <br/>
+                      <label htmlFor="">{created.entryfees}</label>
                       <input
-                        type="number"
+                        type="range"
+                        value={created.entryfees}
                         name="entryfees"
                         onChange={handleChange1}
                         className="block w-full mb-2 p-2 border rounded text-black"
                         placeholder="Entry Fees"
+                       
                       />
+                      <label htmlFor="">Burning Rate</label>
+                      <br />
+                      <label htmlFor="">{created.burningRate}</label>
                       <input
-                        type="number"
+                        type="range"
                         name="burningRate"
+                        value={created.burningRate}
                         onChange={handleChange1}
                         className="block w-full mb-2 p-2 border rounded text-black"
                         placeholder="Burning Rate"
                       />
+                      <label htmlFor="">Bot Difficulty</label>
+                      <br />
+                      <label htmlFor="">{created.botDifficulty}</label>
                       <input
-                        type="number"
+                        type="range"
+                        value={created.botDifficulty}
+                        name="botDifficulty"
+                        onChange={handleChange1}
+                        className="block w-full mb-2 p-2 border rounded text-black"
+                        placeholder="Bot Difficulty "
+                      />
+                      <label htmlFor="">Price</label>
+                      <br />
+                      <label htmlFor="">{created.price}</label>
+                      <input
+                        type="range"
                         name="price"
+                        value={created.price}
                         onChange={handleChange1}
                         className="block w-full mb-2 p-2 border rounded text-black"
                         placeholder="Price"

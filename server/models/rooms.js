@@ -12,6 +12,7 @@ const Rooms = sequelize.define('Rooms', {
   entryfees: DataTypes.FLOAT,
   burningRate: DataTypes.FLOAT,
   price: DataTypes.FLOAT,
+  botDifficulty: DataTypes.FLOAT,
 }, {
   tableName: 'rooms',
   timestamps: false,
