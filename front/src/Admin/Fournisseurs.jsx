@@ -28,8 +28,12 @@ const Dealers = () => {
   const handleEdit = (user) => {
     setEditingUser(user);
     setUpdated({
-     
-      coins:user.coins
+      name:user.name,
+      email:user.email,
+      password:user.password,
+      phoneNumber:user.phoneNumber,
+      coins:user.coins,
+
     });
   };
 
@@ -93,7 +97,7 @@ const Dealers = () => {
     const { name, value } = e.target;
     setUpdated(prev => ({
       ...prev,
-      [name]: parseFloat(value)
+      [name]: value
     }));
   };
   const handleChange1 = (e) => {
@@ -199,15 +203,60 @@ const Dealers = () => {
                   </td>
                   <td className="border-b px-4 py-2 text-left"></td>
                 </tr>
+                
                 {editingUser && editingUser.id === user.id && (
-                  <tr>
-                    <td colSpan="6">
-                      <div className="mt-4 p-4 bg-gray-100 rounded-lg">
+                  // <tr>
+                  //   <td colSpan="6">
+                      <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center  ">
+                        <div className="bg-white p-6 rounded-lg max-w-lg w-full shadow-lg border border-gray-300">
+
                         <h3 className="text-lg font-bold">Edit Fournisseur</h3>
                         <div className="mt-2">
                           
                          
                           
+                          <input
+                            type="text"
+                            name="name"
+                            value={updated.name || ''}
+                            onChange={handleChange}
+                            className="block w-full mb-2 p-2 border rounded text-black"
+                            placeholder="Name"
+                            />
+                          <input
+                            type="text"
+                            name="lastName"
+                            value={updated.lastName || ''}
+                            onChange={handleChange}
+                            className="block w-full mb-2 p-2 border rounded text-black"
+                            placeholder="Last Name"
+                            />
+                          <input
+                            type="text"
+                            name="phoneNumber"
+                            value={updated.phoneNumber || ''}
+                            onChange={handleChange}
+                            className="block w-full mb-2 p-2 border rounded text-black"
+                            placeholder="Phone Number"
+                            />
+                          
+                          <input
+                            type="email"
+                            name="email"
+                            value={updated.email || ''}
+                            onChange={handleChange}
+                            className="block w-full mb-2 p-2 border rounded text-black"
+                            placeholder="Email"
+                            />
+                          
+                          <input
+                            type="password"
+                            name="password"
+                            value={updated.password || ''}
+                            onChange={handleChange}
+                            className="block w-full mb-2 p-2 border rounded text-black"
+                            placeholder="Password"
+                            />
                           <input
                             type="number"
                             name="coins"
@@ -215,25 +264,25 @@ const Dealers = () => {
                             onChange={handleChange}
                             className="block w-full mb-2 p-2 border rounded text-black"
                             placeholder="Coins"
-                          />
+                            />
                           <button
                             onClick={() => handleSave(user.id)}
                             className="mt-2 px-4 py-2 bg-blue-500 text-white rounded"
-                          >
+                            >
                             Save
                           </button>
                           <button
                             onClick={() => setEditingUser(null)}
                             className="ml-2 mt-2 px-4 py-2 bg-gray-500 text-white rounded"
-                          >
+                            >
                             Cancel
                           </button>
                         </div>
+                            </div>
                       </div>
-                    </td>
-                  </tr>
+                  //   </td>
+                  // </tr>
                 )}
-                
               </React.Fragment>
             ))}
           </tbody>

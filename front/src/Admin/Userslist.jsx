@@ -11,7 +11,12 @@ function UsersList() {
   const [created, setCreated] = useState({});
   const [refresh1, setrefresh1] = useState(false);
   const [editData, setEditData] = useState({
-   coins:''
+   coins:'',
+   name:'',
+   phoneNumber:'',
+   email:'',
+   password:'',
+   lastName:''
   });
   const [isActionModalOpen, setIsActionModalOpen] = useState(false);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
@@ -201,18 +206,62 @@ function UsersList() {
               <div className="flex flex-col gap-4">
                
                
-
                 <label>
                   
-                  <span className="block font-bold">Coins</span>
+                  <span className="block font-bold">Name</span>
                   <input
                     type="text"
-                    name="coins"
-                    value={editData.coins}
+                    name="name"
+                    value={editData.name}
                     onChange={handleEditChange}
                     className="w-full border border-gray-300 p-2 rounded"
                   />
                 </label>
+                <label>
+                  
+                  <span className="block font-bold">Last Name</span>
+                  <input
+                    type="text"
+                    name="lastName"
+                    value={editData.lastName}
+                    onChange={handleEditChange}
+                    className="w-full border border-gray-300 p-2 rounded"
+                  />
+                </label>
+                <label>
+                  
+                  <span className="block font-bold">Phone Number</span>
+                  <input
+                    type="text"
+                    name="phoneNumber"
+                    value={editData.phoneNumber}
+                    onChange={handleEditChange}
+                    className="w-full border border-gray-300 p-2 rounded"
+                  />
+                </label>
+                <label>
+                  
+                  <span className="block font-bold">email</span>
+                  <input
+                    type="email"
+                    name="email"
+                    value={editData.email}
+                    onChange={handleEditChange}
+                    className="w-full border border-gray-300 p-2 rounded"
+                  />
+                </label>
+                <label>
+                  
+                  <span className="block font-bold">password</span>
+                  <input
+                    type="password"
+                    name="password"
+                    value={editData.password}
+                    onChange={handleEditChange}
+                    className="w-full border border-gray-300 p-2 rounded"
+                  />
+                </label>
+
               </div>
               <div className="mt-6 flex justify-end space-x-4">
                 <button

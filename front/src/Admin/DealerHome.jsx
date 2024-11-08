@@ -3,8 +3,18 @@ import DealerSideNav from './DealerSideNav'; // Assume you already have this com
 import { FaUsers, FaCoins, FaChartLine, FaHistory } from 'react-icons/fa';
 import { Line } from 'react-chartjs-2'; // For graphs
 import 'chart.js/auto';
+import { useAuth } from './authContext';
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 const DealerHome = () => {
+  const {isAuthenticated}=useAuth()
+  const navigate=useNavigate()
+  useEffect(()=>{
+    if (!isAuthenticated){
+      return navigate('/admin-login')
+    }
+
+  },[])
   // Sample data for metrics and chart
   const [newMonths,setNewMonths]=useState([])
   const[dealers,setDealers]=useState(0)
@@ -35,9 +45,10 @@ const DealerHome = () => {
     .catch(err=>console.log(err))
     axios.get('http://localhost:5000/api/users/getAll').then(r=>setUsers(r.data.users.length))
     .catch(err=>console.log(err))
-    axios.get('http://localhost:5000/api/history').then(r=>setTransaction(r.data.length))
-    .catch(err=>console.log(err))
+    // axios.get('http://localhost:5000/api/history').then(r=>setTransaction(r.data.length))
+    // .catch(err=>console.log(err))
     axios.get('http://localhost:5000/api/allFournisseur').then(r=>{
+      setTransaction(r.data.users.length)
       var s=0
       r?.data?.users?.forEach(e=>{
         s+=e.coins
@@ -107,7 +118,7 @@ const DealerHome = () => {
       <div className="flex-1 p-6">
         {/* Top Bar */}
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-semibold">Dashboard</h1>
+          <h1 className="text-3xl font-semibold">Amdin Dashboard</h1>
          
         </div>
 
@@ -135,9 +146,9 @@ const DealerHome = () => {
             </div>
           </div>
           <div className="bg-white p-4 rounded-lg shadow-md flex items-center">
-            <FaHistory className="text-red-600 text-3xl mr-4" />
+          <FaUsers className="text-purple-600 text-3xl mr-4" />
             <div>
-              <p className="text-sm text-gray-500">Transactions</p>
+              <p className="text-sm text-gray-500">Total Fournisseurs</p>
               <p className="text-xl font-semibold">{transaction?transaction:0}</p>
             </div>
           </div>
@@ -154,32 +165,37 @@ const DealerHome = () => {
           {/* Recent Transactions (Table) */}
           <div className="bg-white p-6 rounded-lg w-full shadow-md">
             <h2 className="text-lg font-semibold mb-4">Recent Transactions</h2>
-            {hist?<table className="max-w-fit text-[12px] bg-white border border-gray-300">
-              <thead>
-                <tr>
-                  <th className="py-3 px-6 border border-gray-300">Fournisseur</th>
-                  <th className="py-3 px-6 border border-gray-300">Action</th>
-                  <th className="py-3 px-6 border border-gray-300">Dealer</th>
-                  <th className="py-3 px-6 border border-gray-300">Total Coins</th>
-                  <th className="py-3 px-6 border border-gray-300">Date</th>
-                </tr>
-              </thead>
-             <tbody>
-                {/* Example Data */}
-                <tr className="hover:bg-gray-100">
-                  <td className="py-3 px-6 border border-gray-300">{hist?hist?.Fournisseur?.name+" "+hist?.Fournisseur?.lastName:""}</td>
-                  <td className="py-3 px-6 border border-gray-300 text-center">
-                    <span className="text-green-500">Transfer</span>
-                  </td>
-                  <td className="py-3 px-6 border border-gray-300">{hist?hist?.Dealer?.name+" "+hist?.Dealer?.lastName:""}</td>
-                  <td className="py-3 px-6 border border-gray-300 text-center">{hist?hist?.totalcoins:0}</td>
-                  <td className="py-3 px-6 border border-gray-300 text-center text-[10px]" >
-                    {hist?hist?.createdAt?.slice(0,10):"x"}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-              :<h1>No Transaction Found .</h1>}
+            {hist ? (
+              <div className="overflow-x-auto">
+                <table className="min-w-full text-[12px] bg-white border border-gray-300">
+                  <thead>
+                    <tr>
+                      <th className="py-3 px-6 border border-gray-300">Fournisseur</th>
+                      <th className="py-3 px-6 border border-gray-300">Action</th>
+                      <th className="py-3 px-6 border border-gray-300">Dealer</th>
+                      <th className="py-3 px-6 border border-gray-300">Total Coins</th>
+                      <th className="py-3 px-6 border border-gray-300">Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {/* Example Data */}
+                    <tr className="hover:bg-gray-100">
+                      <td className="py-3 px-6 border border-gray-300">{hist?.Fournisseur?.name} {hist?.Fournisseur?.lastName}</td>
+                      <td className="py-3 px-6 border border-gray-300 text-center">
+                        <span className="text-green-500">Transfer</span>
+                      </td>
+                      <td className="py-3 px-6 border border-gray-300">{hist?.Dealer?.name} {hist?.Dealer?.lastName}</td>
+                      <td className="py-3 px-6 border border-gray-300 text-center">{hist?.totalcoins || 0}</td>
+                      <td className="py-3 px-6 border border-gray-300 text-center text-[10px]">
+                        {hist?.createdAt?.slice(0, 10) || "x"}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <h1>No Transaction Found.</h1>
+            )}
           </div>
         </div>
       </div>

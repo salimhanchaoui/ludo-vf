@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { AuthProvider } from './Admin/authContext';
 import DealerHome from './Dealer/DealerHome';
 import Userslist from './Dealer/Userslist';
 import TransactionHist1 from './Dealer/TransactionHist';
@@ -20,8 +21,10 @@ import Rooms from './Admin/Rooms';
 import FourHist from './Admin/FourHist';
 import DealerHist from './Admin/DealerHist';
 import UserHist from './Admin/UserHist';
+import LoginAdmin from './Admin/LoginAdmin';
 function App() {
   return (
+    <AuthProvider>
     <Router>
     <div className="App">
       {/* Assuming this component handles navigation links */}
@@ -35,7 +38,12 @@ function App() {
         <Route path="/" element={ <ChooseLogin/>} />
         <Route path="/Login-dealer" element={ <LoginDealer/>} />
         <Route path="/login-fournisseur" element={ <LoginFournisseur/>} />
+         
+
         <Route path="/Admin-dashboard" element={ <DealerHome2/>} />
+        <Route path="/admin-login" element={ <LoginAdmin/>} />
+        
+
         <Route path="/users" element={ <Userslist2/>} />
         <Route path="/fournisseurs" element={ <Fournisseurs/>} />
         <Route path="/dealers" element={ <Dealers/>} />
@@ -47,6 +55,7 @@ function App() {
       </Routes>
     </div>
   </Router>
+        </AuthProvider>
   );
 }
 
