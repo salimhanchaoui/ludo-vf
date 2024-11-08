@@ -8,6 +8,7 @@ const router = require('./routes/users');
 const routerHist = require('./routes/history');
 const roomRouter = require('./routes/rooms');
 const userGameRouter = require('./routes/userGame');
+const adminRouter = require('./routes/admin');
 // Defining a port
 const PORT =5000;
 // Middleware to parse JSON bodies
@@ -19,5 +20,6 @@ app.use('/api',router)
 app.use('/api',routerHist)
 app.use('/api',roomRouter)
 app.use('/api',userGameRouter)
+app.use('/api',adminRouter)
 
 app.listen(PORT)
